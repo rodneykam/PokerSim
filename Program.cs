@@ -15,11 +15,11 @@ namespace PokerSim
             deck.Shuffle();
 
             var pokerHand = new PokerHand.PokerHand();
-            pokerHand.cards.Add(deck.cards[0]);
-            pokerHand.cards.Add(deck.cards[1]);
-            pokerHand.cards.Add(deck.cards[2]);
-            pokerHand.cards.Add(deck.cards[3]);
-            pokerHand.cards.Add(deck.cards[4]);
+            pokerHand.cards.Add(new Card(5,2));
+            pokerHand.cards.Add(new Card(2,2));
+            pokerHand.cards.Add(new Card(4,2));
+            pokerHand.cards.Add(new Card(3,2));
+            pokerHand.cards.Add(new Card(6,2));
 
             var handResults = pokerHand.Evaluate();
 
@@ -27,6 +27,7 @@ namespace PokerSim
             {
                 Console.WriteLine(card.ShowCard());
             }
+            Console.WriteLine("================");
             Console.WriteLine(handResults);
         }
     }

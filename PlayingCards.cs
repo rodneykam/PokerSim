@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace PlayingCards
 {
-    public class Card
+    public class Card : IComparable<Card>
     {
         public enum enumRank {Two,Three,Four,Five,Six,Seven,Eight,Nine,Ten,Jack,Queen,King,Ace};
         public enum enumSuit {Spades,Hearts,Clubs,Diamonds};
@@ -14,6 +15,38 @@ namespace PlayingCards
         {
             Rank = (enumRank)iRank;
             Suit = (enumSuit)iSuit;
+        }
+
+        public int CompareTo(Card other)
+        {
+            if (other == null)
+                return 1;
+
+
+            return ((int)Rank).CompareTo((int)other.Rank);
+        }
+
+        public static bool operator >  (Card operand1, Card operand2)
+        {
+            return operand1.CompareTo(operand2) == 1;
+        }
+        
+        // Define the is less than operator.
+        public static bool operator <  (Card operand1, Card operand2)
+        {
+            return operand1.CompareTo(operand2) == -1;
+        }
+
+        // Define the is greater than or equal to operator.
+        public static bool operator >=  (Card operand1, Card operand2)
+        {
+            return operand1.CompareTo(operand2) >= 0;
+        }
+        
+        // Define the is less than or equal to operator.
+        public static bool operator <=  (Card operand1, Card operand2)
+        {
+        return operand1.CompareTo(operand2) <= 0;
         }
 
         public string ShowCard()
