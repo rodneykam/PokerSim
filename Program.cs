@@ -14,27 +14,20 @@ namespace PokerSim
             Console.WriteLine("Poker Simulator");
             deck.Shuffle();
 
-            var hand = new List<Card>();
-            hand.Add(deck.cards[0]);
-            hand.Add(deck.cards[1]);
-            hand.Add(deck.cards[2]);
-            hand.Add(deck.cards[3]);
-            hand.Add(deck.cards[4]);
+            var pokerHand = new PokerHand.PokerHand();
+            pokerHand.cards.Add(deck.cards[0]);
+            pokerHand.cards.Add(deck.cards[1]);
+            pokerHand.cards.Add(deck.cards[2]);
+            pokerHand.cards.Add(deck.cards[3]);
+            pokerHand.cards.Add(deck.cards[4]);
 
-            var groupedCards = hand
-                    .GroupBy(u => u.Rank)
-                    .Select(grp => grp.ToList())
-                    .ToList();
+            var handResults = pokerHand.Evaluate();
 
-            foreach (var group in groupedCards)
-            {
-                Console.WriteLine("Group: {0}",group.Count);
-            }
-
-            foreach(var card in hand)
+            foreach(var card in pokerHand.cards)
             {
                 Console.WriteLine(card.ShowCard());
             }
+            Console.WriteLine(handResults);
         }
     }
 }
