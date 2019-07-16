@@ -1,14 +1,41 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using PlayingCards;
 
-namespace PokerHand
+namespace PokerDeck
 {
+    
     public class PokerHand
     {
         public List<Card> cards;
 
-        public Card.enumRank Ace { get; private set; }
+        public enum PokerRank {
+            [Display(Name = "Rubbish")]
+            Nothing,
+            [Display(Name = "Pair")]
+            Pair,
+            [Display(Name = "Two Pair")]
+            TwoPair,
+            [Display(Name = "Three of a Kind")]
+            Set,
+            [Display(Name = "Straight")]
+            Straight,
+            [Display(Name = "Flush")]
+            Flush,
+            [Display(Name = "Full House")]
+            Boat,
+            [Display(Name = "Four of a Kind")]
+            Quads,
+            [Display(Name = "Straight Flush")]
+            StraightFlush,
+            [Display(Name = "Royal Flush")]
+            Royal
+        }
+
+        public PokerRank handRank { get; set; }
 
         public PokerHand()
         {
@@ -30,9 +57,9 @@ namespace PokerHand
             } 
         }
 
-        public string Evaluate()
+        public PokerRank Evaluate()
         {
-            var handValue = "Rubbish";
+            handRank = PokerRank.Nothing;
 
             cards.Sort();
 
@@ -62,25 +89,25 @@ namespace PokerHand
             }
 
             if (straight && flush && cards[4].Rank == Card.enumRank.Ace)
-                handValue = "Royal Flush";
+                handRank = PokerRank.Royal;
             else if (straight && flush)
-                handValue = "Straight Flush";
+                handRank = PokerRank.StraightFlush;
             else if (quads)
-                handValue = "Four of a Kind";
+               handRank = PokerRank.Quads;
             else if (trips && pair)
-                handValue = "Full House";    
+                handRank = PokerRank.Boat;    
             else if (flush)
-                handValue = "Flush";
+                handRank = PokerRank.Flush;
             else if (straight)
-                handValue = "Straight";
+                handRank = PokerRank.Straight;
             else if (trips)
-                handValue = "Three of a Kind";
+                handRank = PokerRank.Set;
             else if (pairs.Count() > 1)
-                handValue = "Two Pair";
+                handRank = PokerRank.TwoPair;
             else if (pair)
-                handValue = "Pair";    
-    
-            return handValue;
+                handRank = PokerRank.Pair;    
+
+            return handRank;
         }
     }
 }
