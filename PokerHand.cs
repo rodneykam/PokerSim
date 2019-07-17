@@ -60,6 +60,9 @@ namespace PokerDeck
         public PokerRank Evaluate()
         {
             handRank = PokerRank.Nothing;
+            
+            if (cards.Count() < 5)
+                return handRank;
 
             cards.Sort();
 
@@ -82,8 +85,11 @@ namespace PokerDeck
             var sum = ((int)cards[4].Rank - (int)cards[0].Rank);
             var straight = (((int)cards[4].Rank - (int)cards[0].Rank) == 4) ? true : false;
             // Check for a wheel Straight
-            if (cards[4].Rank == Card.enumRank.Ace &&
-                (((int)cards[3].Rank - (int)cards[0].Rank) == 3))
+            if (cards[4].Rank == Card.enumRank.Ace 
+                    && cards[0].Rank == Card.enumRank.Two
+                    && cards[0].Rank == Card.enumRank.Three
+                    && cards[0].Rank == Card.enumRank.Four
+                    && cards[0].Rank == Card.enumRank.Five)
             {
                 straight = true;
             }
@@ -108,6 +114,14 @@ namespace PokerDeck
                 handRank = PokerRank.Pair;    
 
             return handRank;
+        }
+
+        public void Show()
+        {
+            foreach (var card in cards)
+            {
+                Console.WriteLine("{0} of {1}", card.Rank, card.Suit);
+            }
         }
     }
 }

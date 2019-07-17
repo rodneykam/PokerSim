@@ -53,21 +53,20 @@ namespace PokerSim
             deck.Shuffle();
 
             var pokerHand = new PokerHand();
-            pokerHand.cards.Add(new Card(5,2));
-            pokerHand.cards.Add(new Card(2,2));
-            pokerHand.cards.Add(new Card(4,2));
-            pokerHand.cards.Add(new Card(3,2));
-            pokerHand.cards.Add(new Card(6,2));
-
-            var handResults = pokerHand.Evaluate();
+            
+            for (int i = 1; i <= 5; i++)
+            {
+                pokerHand.cards.Add(deck.Deal());
+            }
+            
+            var handResult = pokerHand.Evaluate();
 
             foreach(var card in pokerHand.cards)
             {
                 Console.WriteLine(card.ShowCard());
             }
             Console.WriteLine("================");
-
-            Console.WriteLine(handResults.ToDisplayName());
+            Console.WriteLine(handResult.ToDisplayName());
         }
     }
 }

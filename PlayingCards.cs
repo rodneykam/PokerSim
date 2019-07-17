@@ -65,15 +65,16 @@ namespace PlayingCards
         public void Shuffle()
         {
             var rand = new System.Random();
-
-            for (int n = cards.Count - 1; n > 0; --n)
+            var newDeck = new Deck();
+            for (int n = newDeck.cards.Count - 1; n > 0; --n)
             {
                 int k = rand.Next(n+1);
-                var temp = cards[n];
-                cards[n] = cards[k];
-                cards[k] = temp;
+                var temp = newDeck.cards[n];
+                newDeck.cards[n] = newDeck.cards[k];
+                newDeck.cards[k] = temp;
             }
-
+            this.cards = newDeck.cards;
+            newDeck = null;
         }
         public Deck()
         {
@@ -83,6 +84,13 @@ namespace PlayingCards
             {
                 cards.Add(new Card(i%13,i%4));
             }
-        }        
+        }   
+
+        public Card Deal()
+        {
+            var card = cards[0];
+            cards.RemoveAt(0);
+            return card;
+        }     
     } 
 }
